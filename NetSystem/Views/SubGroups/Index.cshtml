@@ -1,0 +1,59 @@
+﻿@model IEnumerable<NetSystem.Entity.SubGroup>
+
+@{
+    ViewData["Title"] = "گروه فرعی";
+}
+
+<h1>گروه فرعی</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">جدید</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubGroupIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubGroupTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company.CompanyTiltle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.GroupTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubGroupIndex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubGroupTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.ID">ویرایش</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

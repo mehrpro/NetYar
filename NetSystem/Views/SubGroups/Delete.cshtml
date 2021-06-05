@@ -1,0 +1,51 @@
+﻿@model NetSystem.Entity.SubGroup
+
+@{
+    ViewData["Title"] = "حذف";
+}
+
+<h2 class="text text-danger">حذف</h2>
+
+<h3>شما مطمئن هستید که می خواهید این گزینه را حذف کنید؟</h3>
+<div>
+    <h4>گروه فرعی</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company.CompanyTiltle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Group)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Group.GroupTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubGroupIndex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubGroupIndex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubGroupTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubGroupTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> |
+        <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+    </form>
+</div>

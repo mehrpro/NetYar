@@ -1,0 +1,35 @@
+﻿@model IEnumerable<NetSystem.Entity.TypeofRepair>
+
+@{
+    ViewData["Title"] = "نوع تعمیر";
+}
+
+<h2>نوع تعمیر</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">جدید</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeTitle)
+                </td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.ID">ویرایش</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
