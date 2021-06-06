@@ -4,11 +4,11 @@
     ViewData["Title"] = "کدگذاری";
 }
 
-<h1>کدگذاری تجهیزات</h1>
+<h2>فهرست تجهیزات و ماشین آلات</h2>
 
-<p>
+@*<p>
     <a asp-action="Create" class="btn btn-primary">جدید</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -38,8 +38,10 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.ID">ویرایش</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">حذف</a>
+                    @*<a class="btn btn-info" asp-action="Edit" asp-route-id="@item.ID">ویرایش</a>
+                      <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">حذف</a>*@
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ID">جزئیات</a>*
+
                 </td>
             </tr>
         }

@@ -26,12 +26,9 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">صفحه اصلی</a>
+                        <a class="nav-link text-white" href="/Home">صفحه اصلی</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">زیرساخت</a>
-                    </li>
-                    <li class="nav-item dropdown">
+                       <li class="nav-item dropdown">
                         <a class="nav-link text-white" href="#" id="dropdownInfra" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">مدارک فنی</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownInfra">
@@ -40,27 +37,27 @@
                             <a class="dropdown-item" href="#">آرشیو فرم</a>
                             <a class="dropdown-item" href="#">شناسنامه تجهیزات</a>
                             <a class="dropdown-item" href="#">آرشیو مدارک تجهیزات</a>
-                            <a class="dropdown-item" href="#">آرشیو فرم</a>
-
+                            <a class="dropdown-item" href="#">آرشیو مدارک فنی</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link text-white" href="#" id="dropdownCoding" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">ماشین آلات</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownCoding">
-                            <a class="dropdown-item" href="#">گروه ها و شرکت ها</a>
-                            <a class="dropdown-item" href="#">گروه های اصلی</a>
-                            <a class="dropdown-item" href="#">گروه فرعی </a>
-                            <a class="dropdown-item" href="#">کدگذاری تجهیزات</a>
-                            <a class="dropdown-item" href="#">لیست تجهیزات</a>
+                            <a class="dropdown-item" href="/Companies">گروه ها و شرکت ها</a>
+                            <a class="dropdown-item" href="/Groups">گروه های اصلی</a>
+                            <a class="dropdown-item" href="/SubGroups">گروه فرعی </a>
+                            <a class="dropdown-item" href="/Codings/Create">کدگذاری تجهیزات</a>
+                            <a class="dropdown-item" href="/Codings">لیست تجهیزات</a>
+                            <a class="dropdown-item" href="/UnitOfMeasurements">واحد اندازه گیری</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link text-white" href="#" id="dropdownRequest" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">تعمیرات</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownRequest">
-                            <a class="dropdown-item" href="#">درخواست تعمیر</a>
-                            <a class="dropdown-item" href="#">لیست درخواست ها</a>
+                            <a class="dropdown-item" href="/RequestRepairs/Create">درخواست تعمیر</a>
+                            <a class="dropdown-item" href="/RequestRepairs">درخواست های جاری</a>
                             <a class="dropdown-item" href="#">گزارش تعمیر</a>
                             <a class="dropdown-item" href="#">تعمیر خارج ازشرکت</a>
                             <a class="dropdown-item" href="#">گزارش تعمیر خارج ازشرکت</a>
@@ -68,7 +65,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">درباره ما</a>
+                        <a class="nav-link text-white" asp-controller="Home" asp-action="Privacy" tabindex="-1" aria-disabled="true">درباره ما</a>
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
