@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> SignInManager
+
+
+<!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
@@ -68,10 +71,28 @@
                         <a class="nav-link text-white" asp-controller="Home" asp-action="Privacy" tabindex="-1" aria-disabled="true">درباره ما</a>
                     </li>
                 </ul>
-                <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="جستجو" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">جستجو</button>
-                </form>
+                <ul class="navbar-nav flex-grow-1 ml-auto">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item ml-auto">
+                            <form asp-controller="Account" asp-action="LogOut" method="post">
+                                <button type="submit" class="btn btn-outline-primary nav-link text-white">خروج</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item ml-auto">
+                            <a class="btn btn-outline-success nav-link text-white"
+                               asp-area="" asp-controller="Account" asp-action="Login">ورود به سامانه</a>
+                        </li>
+
+                    }
+                </ul>
+                @*<form class="form-inline mt-2 mt-md-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="جستجو" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">جستجو</button>
+                    </form>*@
             </div>
         </nav>
     </header>

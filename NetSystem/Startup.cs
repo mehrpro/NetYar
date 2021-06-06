@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using PersianTranslation.Identity;
 
 namespace NetSystem
 {
@@ -32,10 +33,22 @@ namespace NetSystem
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.Password.RequiredUniqueChars = 0;
+
+                    options.User.RequireUniqueEmail = true;
+                    options.User.AllowedUserNameCharacters =
+                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
+
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                })
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
-            services.AddControllersWithViews();
+                .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>(); 
+
+
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +69,7 @@ namespace NetSystem
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

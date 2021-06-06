@@ -23,7 +23,9 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.RequestRepairs.Include(r => r.Applicant).Include(r => r.ApplicationUser).Include(r => r.Machinery).Include(r => r.TypeofRepair);
+            var appDbContext = _context.RequestRepairs
+                .Include(r => r.Applicant).Include(r => r.ApplicationUser)
+                .Include(r => r.Machinery).Include(r => r.TypeofRepair);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -52,7 +54,7 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs/Create
         public IActionResult Create()
         {
-            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle");          
+            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle");
             ViewData["MachineryID_FK"] = new SelectList(_context.Machineries, "ID", "MachineryTitle");
             ViewData["TypeofRepairID_FK"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle");
             return View();
@@ -67,7 +69,7 @@ namespace NetSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newRequestRepair = new RequestRepair() 
+                var newRequestRepair = new RequestRepair()
                 {
                     ApplicantID_FK = requestRepair.ApplicantID_FK,
                     IsActive = true,
@@ -78,12 +80,12 @@ namespace NetSystem.Controllers
                     TypeofRepairID_FK = requestRepair.TypeofRepairID_FK,
                     RequestTitle = requestRepair.RequestTitle,
                     UserID_FK = null,
-                    
-                };
-                
 
-                
-                
+                };
+
+
+
+
                 _context.Add(requestRepair);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
