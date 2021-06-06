@@ -1,0 +1,33 @@
+﻿@model List<ApplicationRole>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+
+<a asp-controller="AccessManager" asp-action="AddRole" class="btn btn-primary">جدید</a>
+
+@if (!Model.Any())
+{
+    <h1>مقامی یافت نشد</h1>
+}
+else
+{
+    for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="card mt-2">
+            <div class="card-body">
+                Role Name : <b>@Model[i].Name</b>
+            </div>
+            <div class="card-footer">
+                <form asp-controller="AccessManager" asp-action="DeleteRole" method="post" asp-route-id="@Model[i].Id">
+
+                    <a asp-controller="AccessManager" asp-action="EditRole" asp-route-id="@Model[i].Id"
+                       class="btn btn-primary">Edit</a>
+
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    }
+}
+

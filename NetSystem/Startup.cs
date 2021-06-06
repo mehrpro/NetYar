@@ -33,7 +33,7 @@ namespace NetSystem
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
                     options.Password.RequiredUniqueChars = 0;
 
@@ -44,7 +44,7 @@ namespace NetSystem
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
                 })
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>(); 
+                .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>();
 
 
 
