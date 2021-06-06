@@ -51,8 +51,7 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs/Create
         public IActionResult Create()
         {
-            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle");
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
+            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle");          
             ViewData["MachineryID_FK"] = new SelectList(_context.Machineries, "ID", "MachineryTitle");
             ViewData["TypeofRepairID_FK"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle");
             return View();

@@ -1,4 +1,4 @@
-﻿@model NetSystem.Entity.RequestRepair
+﻿@model NetSystem.ViewModels.RequestRepairViewModel
 
 @{
     ViewData["Title"] = "جدید";
@@ -36,14 +36,14 @@
                 <select asp-for="ApplicantID_FK" class="form-control" asp-items="ViewBag.ApplicantID_FK"></select>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-8">
 
             <div class="form-group">
                 <label asp-for="RequestTitle" class="control-label"></label>
-                <input asp-for="RequestTitle" class="form-control" />
+                <textarea rows="4" asp-for="RequestTitle" class="form-control"></textarea>
                 <span asp-validation-for="RequestTitle" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group float-left">
                 <input type="submit" value="ذخیره" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">بازگشت</a>
             </div>
