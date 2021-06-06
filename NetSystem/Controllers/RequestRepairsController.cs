@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using NetSystem.ViewModels;
 
 namespace NetSystem.Controllers
 {
@@ -62,16 +63,32 @@ namespace NetSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Registered,IsActive,IsDelete,MachineryID_FK,UserID_FK,RequestDataTime,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepair requestRepair)
+        public async Task<IActionResult> Create([Bind("MachineryID_FK,RequestDataTime,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepairViewModel requestRepair)
         {
             if (ModelState.IsValid)
             {
+                var newRequestRepair = new RequestRepair() 
+                {
+                    ApplicantID_FK = requestRepair.ApplicantID_FK,
+                    IsActive = true,
+                    IsDelete = false,
+                    MachineryID_FK = requestRepair.MachineryID_FK,
+                    Registered = DateTime.Now,
+                    RequestDataTime = requestRepair.RequestDataTime,
+                    TypeofRepairID_FK = requestRepair.TypeofRepairID_FK,
+                    RequestTitle = requestRepair.RequestTitle,
+                    UserID_FK = null,
+                    
+                };
+                
+
+                
+                
                 _context.Add(requestRepair);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", requestRepair.ApplicantID_FK);
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id", requestRepair.UserID_FK);
             ViewData["MachineryID_FK"] = new SelectList(_context.Machineries, "ID", "MachineryTitle", requestRepair.MachineryID_FK);
             ViewData["TypeofRepairID_FK"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", requestRepair.TypeofRepairID_FK);
             return View(requestRepair);
