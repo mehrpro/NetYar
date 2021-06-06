@@ -15,7 +15,12 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="RequestDataTime" class="control-label"></label>
-                <input asp-for="RequestDataTime" class="form-control" />
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer" id="date1">انتخاب</span>
+                    </div>
+                    <input type="text" id="RequestDate" asp-for="RequestDataTime" class="form-control" aria-label="date1" aria-describedby="date1" />
+                </div>
                 <span asp-validation-for="RequestDataTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,6 +54,15 @@
 
 
 
-@section Scripts {
+@section Scripts 
+{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    $('#date1').MdPersianDateTimePicker({
+        targetTextSelector: '#RequestDate',
+        dateFormat: 'yyyy-MM-dd hh:mm:ss',
+        disableAfterToday: true,
+        enableTimePicker: true,        
+    });
+</script>
 }
