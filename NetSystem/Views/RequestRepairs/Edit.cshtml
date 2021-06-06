@@ -1,0 +1,72 @@
+﻿@model NetSystem.Entity.RequestRepair
+
+@{
+    ViewData["Title"] = "ویرایش";
+}
+
+<h2>ویرایش</h2>
+
+<h4>درخواست تعمیرات</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Registered" class="control-label"></label>
+                <input asp-for="Registered" class="form-control" />
+                <span asp-validation-for="Registered" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDelete" /> @Html.DisplayNameFor(model => model.IsDelete)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachineryID_FK" class="control-label"></label>
+                <select asp-for="MachineryID_FK" class="form-control" asp-items="ViewBag.MachineryID_FK"></select>
+                <span asp-validation-for="MachineryID_FK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserID_FK" class="control-label"></label>
+                <select asp-for="UserID_FK" class="form-control" asp-items="ViewBag.UserID_FK"></select>
+                <span asp-validation-for="UserID_FK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestDataTime" class="control-label"></label>
+                <input asp-for="RequestDataTime" class="form-control" />
+                <span asp-validation-for="RequestDataTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeofRepairID_FK" class="control-label"></label>
+                <select asp-for="TypeofRepairID_FK" class="form-control" asp-items="ViewBag.TypeofRepairID_FK"></select>
+                <span asp-validation-for="TypeofRepairID_FK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicantID_FK" class="control-label"></label>
+                <select asp-for="ApplicantID_FK" class="form-control" asp-items="ViewBag.ApplicantID_FK"></select>
+                <span asp-validation-for="ApplicantID_FK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestTitle" class="control-label"></label>
+                <input asp-for="RequestTitle" class="form-control" />
+                <span asp-validation-for="RequestTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

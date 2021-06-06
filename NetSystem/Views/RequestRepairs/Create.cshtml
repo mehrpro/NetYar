@@ -1,0 +1,54 @@
+﻿@model NetSystem.Entity.RequestRepair
+
+@{
+    ViewData["Title"] = "جدید";
+}
+
+<h2>جدید</h2>
+
+<h4>درخواست تعمیرات</h4>
+<hr />
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="RequestDataTime" class="control-label"></label>
+                <input asp-for="RequestDataTime" class="form-control" />
+                <span asp-validation-for="RequestDataTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachineryID_FK" class="control-label"></label>
+                <select asp-for="MachineryID_FK" class="form-control" asp-items="ViewBag.MachineryID_FK"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeofRepairID_FK" class="control-label"></label>
+                <select asp-for="TypeofRepairID_FK" class="form-control" asp-items="ViewBag.TypeofRepairID_FK"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicantID_FK" class="control-label"></label>
+                <select asp-for="ApplicantID_FK" class="form-control" asp-items="ViewBag.ApplicantID_FK"></select>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label asp-for="RequestTitle" class="control-label"></label>
+                <input asp-for="RequestTitle" class="form-control" />
+                <span asp-validation-for="RequestTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
