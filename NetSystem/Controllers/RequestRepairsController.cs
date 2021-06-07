@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,13 @@ namespace NetSystem.Controllers
     public class RequestRepairsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RequestRepairsController(AppDbContext context)
+
+        public RequestRepairsController(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: RequestRepairs
@@ -79,7 +83,7 @@ namespace NetSystem.Controllers
                     RequestDataTime = requestRepair.RequestDataTime,
                     TypeofRepairID_FK = requestRepair.TypeofRepairID_FK,
                     RequestTitle = requestRepair.RequestTitle,
-                    UserID_FK = null,
+                    UserID_FK = _userManager.GetUserId(HttpContext.User)
 
                 };
 
