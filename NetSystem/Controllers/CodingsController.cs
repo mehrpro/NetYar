@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace NetSystem.Controllers
     public class CodingsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CodingsController(AppDbContext context)
+        public CodingsController(AppDbContext context,UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Codings
@@ -51,7 +54,6 @@ namespace NetSystem.Controllers
         // GET: Codings/Create
         public IActionResult Create()
         {
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             ViewData["CompanyID_FK"] = new SelectList(_context.Companies, "ID", "CompanyTiltle");
             ViewData["GroupID_FK"] = new SelectList(_context.Groups, "ID", "GroupTitle");
             ViewData["SubGroupID_FK"] = new SelectList(_context.SubGroups, "ID", "SubGroupTitle");
@@ -63,15 +65,15 @@ namespace NetSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,CompanyID_FK,GroupID_FK,SubGroupID_FK,UserID_FK,CodeIndex,Code,CodeTitle,Description")] Coding coding)
+        public async Task<IActionResult> Create([Bind("CompanyID_FK,GroupID_FK,SubGroupID_FK,CodeIndex,Code,CodeTitle,Description")] Coding coding)
         {
             if (ModelState.IsValid)
             {
+                coding.UserID_FK = _userManager.GetUserId(HttpContext.User);
                 _context.Add(coding);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id", coding.UserID_FK);
             ViewData["CompanyID_FK"] = new SelectList(_context.Companies, "ID", "CompanyTiltle", coding.CompanyID_FK);
             ViewData["GroupID_FK"] = new SelectList(_context.Groups, "ID", "GroupTitle", coding.GroupID_FK);
             ViewData["SubGroupID_FK"] = new SelectList(_context.SubGroups, "ID", "SubGroupTitle", coding.SubGroupID_FK);

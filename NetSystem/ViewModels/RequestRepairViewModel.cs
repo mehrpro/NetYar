@@ -13,7 +13,7 @@ namespace NetSystem.ViewModels
  
         [Display(Name = "تاریخ درخواست")]
         public DateTime RequestDataTime { get; set; }
-
+        public DateTime RequestDataTimeMiladi { get; set; }
 
         [Display(Name = "نوع درخواست")]
         public int TypeofRepairID_FK { get; set; }

@@ -69,8 +69,10 @@ namespace NetSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MachineryID_FK,RequestDataTime,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepairViewModel requestRepair)
+        public async Task<IActionResult> Create([Bind("MachineryID_FK,RequestDataTimeMiladi,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepairViewModel requestRepair)
         {
+            
+
             if (ModelState.IsValid)
             {
                 var newRequestRepair = new RequestRepair()
@@ -84,12 +86,7 @@ namespace NetSystem.Controllers
                     TypeofRepairID_FK = requestRepair.TypeofRepairID_FK,
                     RequestTitle = requestRepair.RequestTitle,
                     UserID_FK = _userManager.GetUserId(HttpContext.User)
-
                 };
-
-
-
-
                 _context.Add(requestRepair);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
