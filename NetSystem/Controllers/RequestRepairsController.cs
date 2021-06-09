@@ -75,19 +75,19 @@ namespace NetSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var newRequestRepair = new RequestRepair()
+                RequestRepair newRequestRepair = new RequestRepair()
                 {
                     ApplicantID_FK = requestRepair.ApplicantID_FK,
                     IsActive = true,
                     IsDelete = false,
                     MachineryID_FK = requestRepair.MachineryID_FK,
                     Registered = DateTime.Now,
-                    RequestDataTime = requestRepair.RequestDataTime,
+                    RequestDataTime = requestRepair.RequestDataTimeMiladi,
                     TypeofRepairID_FK = requestRepair.TypeofRepairID_FK,
                     RequestTitle = requestRepair.RequestTitle,
                     UserID_FK = _userManager.GetUserId(HttpContext.User)
                 };
-                _context.Add(requestRepair);
+                await _context.RequestRepairs.AddAsync(newRequestRepair);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

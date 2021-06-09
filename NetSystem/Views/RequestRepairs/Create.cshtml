@@ -20,7 +20,7 @@
                         <span class="input-group-text cursor-pointer" id="date1">انتخاب</span>
                     </div>
                     <input type="text" id="RequestDate" asp-for="RequestDataTime" class="form-control" aria-label="date1" aria-describedby="date1" />
-                    <input type="hidden" id="RequestDateMiladi" asp-for="RequestDataTimeMiladi" class="form-control" aria-label="date1" aria-describedby="date1" />
+                    <input type="hidden" id="RequestDateMiladi" asp-for="RequestDataTimeMiladi" aria-label="date1" aria-describedby="date1" />
                 </div>
                 <span asp-validation-for="RequestDataTime" class="text-danger"></span>
             </div>
@@ -55,23 +55,18 @@
 
 
 
-@section Scripts 
+@section Scripts
 {
+    <script>
+        $('#date1').MdPersianDateTimePicker({
+            targetTextSelector: '#RequestDate',
+            targetDateSelector: '#RequestDateMiladi',
+            dateFormat: 'yyyy-MM-dd hh:mm:ss',
+            disableAfterToday: true,
+            enableTimePicker: true,
+        });
+
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    $('#date1').MdPersianDateTimePicker({
-        targetTextSelector: '#RequestDate',
-        targetTextSelector: '#RequestDateMiladi',
-        dateFormat: 'yyyy-MM-dd hh:mm:ss',
-        disableAfterToday: true,
-        enableTimePicker: true,
-    });
-    $('#date1').MdPersianDateTimePicker({        
-        targetTextSelector: '#RequestDateMiladi',
-        dateFormat: 'yyyy-MM-dd hh:mm:ss',
-        isGregorian = true,
-        disableAfterToday: true,
-        enableTimePicker: true,
-    });
-</script>
+
 }

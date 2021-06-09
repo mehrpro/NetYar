@@ -13,28 +13,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Registered)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDelete)
+                @Html.DisplayNameFor(model => model.RequestDataTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Machinery)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestDataTime)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.TypeofRepair)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Applicant)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RequestTitle)
@@ -45,37 +31,24 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Registered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDelete)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Machinery.MachineryTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RequestDataTime)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Machinery.MachineryTitle)
+            </td>
+
+            <td>
                 @Html.DisplayFor(modelItem => item.TypeofRepair.TypeTitle)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Applicant.ApplicantTitle)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RequestTitle)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
             </td>
         </tr>
 }
