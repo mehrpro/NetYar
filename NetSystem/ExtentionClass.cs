@@ -14,6 +14,13 @@ namespace NetSystem
             return dt;
         }
 
+        public static string PersianShortDate(this DateTime dateTime)
+        {
+            PersianCalendar jc = new PersianCalendar();
+            var result = jc.GetYear(dateTime.Date) + "/" + jc.GetMonth(dateTime) + "/" + jc.GetDayOfMonth(dateTime);
+            return result;
+        }
+
 
     }
 }

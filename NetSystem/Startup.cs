@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using NetSystem.Repositories;
 using PersianTranslation.Identity;
 
 namespace NetSystem
@@ -45,6 +46,7 @@ namespace NetSystem
                 })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>();
+            services.AddTransient<IRequestRepairRepository, RequestRepairRepository>();
 
 
 

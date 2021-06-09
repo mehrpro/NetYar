@@ -10,19 +10,16 @@ namespace NetSystem.ViewModels.RequestRepair
     {
 
 
-        [Display(Name = "کد دستگاه")]
-        public int MachineryID_FK { get; set; }
-
+        [Display(AutoGenerateField = false)]
+        public long ID { get; set; }
         [Display(Name = "تاریخ درخواست")]
-        public DateTime RequestDataTime { get; set; }
-        public DateTime RequestDataTimeMiladi { get; set; }
-
+        public string RequestDataTime { get; set; }
+        [Display(Name = "کد دستگاه")]
+        public string MachineryCode { get; set; }
+        [Display(Name = "دستگاه")]
+        public string MachineryTitel { get; set; }
         [Display(Name = "نوع درخواست")]
-        public int TypeofRepairID_FK { get; set; }
-
-        [Display(Name = "واحد")]
-        public int ApplicantID_FK { get; set; }
-
+        public string TypeofRepairID_FK { get; set; }
         [Display(Name = "شرح درخواست")]
         public string RequestTitle { get; set; }
     }

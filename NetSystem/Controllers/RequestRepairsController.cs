@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using NetSystem.Repositories;
 using NetSystem.ViewModels;
+using NetSystem.ViewModels.RequestRepair;
 
 namespace NetSystem.Controllers
 {
@@ -16,21 +18,21 @@ namespace NetSystem.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRequestRepairRepository _repairRepository;
 
 
-        public RequestRepairsController(AppDbContext context, UserManager<ApplicationUser> userManager)
+        public RequestRepairsController(AppDbContext context, UserManager<ApplicationUser> userManager, IRequestRepairRepository repairRepository)
         {
             _context = context;
             _userManager = userManager;
+            _repairRepository = repairRepository;
         }
 
         // GET: RequestRepairs
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.RequestRepairs
-                .Include(r => r.Applicant).Include(r => r.ApplicationUser)
-                .Include(r => r.Machinery).Include(r => r.TypeofRepair);
-            return View(await appDbContext.ToListAsync());
+
+            return View(await _repairRepository.GetActiveRequestRepair());
         }
 
         // GET: RequestRepairs/Details/5
@@ -71,7 +73,7 @@ namespace NetSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MachineryID_FK,RequestDataTimeMiladi,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepairViewModel requestRepair)
         {
-            
+
 
             if (ModelState.IsValid)
             {
