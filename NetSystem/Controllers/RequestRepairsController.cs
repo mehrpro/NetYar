@@ -21,7 +21,10 @@ namespace NetSystem.Controllers
         private readonly IRequestRepairRepository _repairRepository;
 
 
-        public RequestRepairsController(AppDbContext context, UserManager<ApplicationUser> userManager, IRequestRepairRepository repairRepository)
+        public RequestRepairsController(
+            AppDbContext context,
+            UserManager<ApplicationUser> userManager,
+            IRequestRepairRepository repairRepository)
         {
             _context = context;
             _userManager = userManager;
@@ -31,18 +34,16 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs
         public async Task<IActionResult> Index()
         {
-
             return View(await _repairRepository.GetActiveRequestRepair());
         }
 
         // GET: RequestRepairs/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();            
+            var result = await _repairRepository.GetRequestRepairById((long)id);
+            if (result == null) return NotFound();
+            
             var requestRepair = await _context.RequestRepairs
                 .Include(r => r.Applicant)
                 .Include(r => r.ApplicationUser)

@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace NetSystem.ViewModels.RequestRepair
 {
-    public class RequestRepairListViewModel
+    /// <summary>
+    /// جزئیات درخواست
+    /// </summary>
+    public class RequestReapirDetailsViewModel
     {
-
-
-        [Display(Name ="شماره")]
+        [Display(Name = "شماره درخواست")]
         public long ID { get; set; }
+        [Display(Name = "تاریخ ثبت")]
+        public string RegisteredDataTime { get; set; }
         [Display(Name = "تاریخ درخواست")]
         public string RequestDataTime { get; set; }
         [Display(Name = "کد دستگاه")]
@@ -19,8 +22,13 @@ namespace NetSystem.ViewModels.RequestRepair
         [Display(Name = "دستگاه")]
         public string MachineryTitel { get; set; }
         [Display(Name = "نوع درخواست")]
-        public string TypeofRepairID_FK { get; set; }
+        public int TypeofRepairList { get; set; }
         [Display(Name = "شرح درخواست")]
         public string RequestTitle { get; set; }
+        [Display(Name = "درخواست کننده")]
+        public string ApplicantUser { get; set; }
+        [Display(Name = "واحد درخواست کننده")]
+        public int ApplicantList { get; set; }
+
     }
 }
