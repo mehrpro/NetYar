@@ -43,19 +43,7 @@ namespace NetSystem.Controllers
             if (id == null) return NotFound();            
             var result = await _repairRepository.GetRequestRepairById((long)id);
             if (result == null) return NotFound();
-            
-            var requestRepair = await _context.RequestRepairs
-                .Include(r => r.Applicant)
-                .Include(r => r.ApplicationUser)
-                .Include(r => r.Machinery)
-                .Include(r => r.TypeofRepair)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (requestRepair == null)
-            {
-                return NotFound();
-            }
-
-            return View(requestRepair);
+            return View(result);
         }
 
         // GET: RequestRepairs/Create

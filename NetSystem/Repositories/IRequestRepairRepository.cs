@@ -17,7 +17,11 @@ namespace NetSystem.Repositories
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<RequestRepairListViewModel>> GetActiveRequestRepair();
-
+        /// <summary>
+        /// جزئیات درخواست براساس شناسه
+        /// </summary>
+        /// <param name="ld">شناسه</param>
+        /// <returns></returns>
         Task<RequestReapirDetailsViewModel> GetRequestRepairById(long ld);
     }
 
@@ -36,21 +40,26 @@ namespace NetSystem.Repositories
         {
             var reqList = await _context.RequestRepairs.Where(x => x.IsActive == true && x.IsDelete == false)
                 .Include(x => x.Machinery).Include(x => x.TypeofRepair).ToListAsync();
-            var result = new List<RequestRepairListViewModel>();
-            foreach (var model in reqList)
+            if(reqList.Count > 0)
             {
-                result.Add(new RequestRepairListViewModel
+                var result = new List<RequestRepairListViewModel>();
+                foreach (var model in reqList)
                 {
-                    ID = model.ID,
-                    RequestDataTime = model.RequestDataTime.PersianShortDate(),
-                    MachineryCode = model.Machinery.Coding.Code.ToString(),
-                    MachineryTitel = model.Machinery.MachineryTitle,
-                    TypeofRepairID_FK = model.TypeofRepair.TypeTitle,
-                    RequestTitle = model.RequestTitle
-                });
-            }
+                    result.Add(new RequestRepairListViewModel
+                    {
+                        ID = model.ID,
+                        RequestDataTime = model.RequestDataTime.PersianShortDate(),
+                        MachineryCode = model.Machinery.Coding.Code.ToString(),
+                        MachineryTitel = model.Machinery.MachineryTitle,
+                        TypeofRepairID_FK = model.TypeofRepair.TypeTitle,
+                        RequestTitle = model.RequestTitle
+                    });
+                }
 
-            return result;
+                return result;
+            }
+            return null;
+
         }
 
         public void Dispose()
