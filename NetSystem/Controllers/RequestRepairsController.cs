@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ using NetSystem.ViewModels.RequestRepair;
 
 namespace NetSystem.Controllers
 {
+    [Authorize]
     public class RequestRepairsController : Controller
     {
         private readonly AppDbContext _context;
@@ -40,9 +42,12 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null) return NotFound();            
+            if (id == null) return NotFound();
             var result = await _repairRepository.GetRequestRepairById((long)id);
             if (result == null) return NotFound();
+            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", result.TypeofRepairList);
+            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", result.ApplicantList);
+
             return View(result);
         }
 
@@ -113,38 +118,25 @@ namespace NetSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ID,Registered,IsActive,IsDelete,MachineryID_FK,UserID_FK,RequestDataTime,TypeofRepairID_FK,ApplicantID_FK,RequestTitle")] RequestRepair requestRepair)
+        public async Task<IActionResult> Details(long id, [Bind("ID,TypeofRepairList,ApplicantList,RequestTitle")] RequestReapirDetailsViewModel model)
         {
-            if (id != requestRepair.ID)
+            if (id != model.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                if (!await _repairRepository.UpdateRequestRepair(model))
                 {
-                    _context.Update(requestRepair);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RequestRepairExists(requestRepair.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", requestRepair.ApplicantID_FK);
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id", requestRepair.UserID_FK);
-            ViewData["MachineryID_FK"] = new SelectList(_context.Machineries, "ID", "MachineryTitle", requestRepair.MachineryID_FK);
-            ViewData["TypeofRepairID_FK"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", requestRepair.TypeofRepairID_FK);
-            return View(requestRepair);
+            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", model.TypeofRepairList);
+            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", model.ApplicantList);
+
+            return View(model);
         }
 
         // GET: RequestRepairs/Delete/5

@@ -4,80 +4,77 @@
     ViewData["Title"] = "جزئیات";
 }
 
-<h2>جزئیات</h2>
+<h4>جزئیات و ویرایش</h4>
+<hr />
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
 
-<div>
-    <h4>درخواست تعمیرات</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ID)
-        </dd>
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label asp-for="ID" class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ID" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model=> model.ApplicantUser)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model=> model.ApplicantUser)
-        </dd>
+            <div class="form-group row">
+                <label asp-for="ApplicantUser" class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ApplicantUser" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RegisteredDataTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RegisteredDataTime)
-        </dd>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RegisteredDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RegisteredDataTime" />
+                </div>
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestDataTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RequestDataTime)
-        </dd>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RequestDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RequestDataTime" />
+                </div>
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MachineryCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MachineryCode)
-        </dd>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryCode"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryCode" />
+                </div>
+            </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MachineryTitel)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MachineryTitel)
-        </dd>
-
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeofRepairList)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TypeofRepairList)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicantList)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicantList)
-        </dd>
-
-
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestTitle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RequestTitle)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">ویرایش</a> |
-    <a asp-action="Index">بازگشت</a>
-</div>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryTitel"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryTitel" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="TypeofRepairList"></label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="TypeofRepairList" asp-items="ViewBag.TypeofRepairList"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="ApplicantList"></label>
+                <div class="col-sm-8">
+                    <select asp-for="ApplicantList" class="form-control" asp-items="ViewBag.ApplicantList"></select>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group ">
+                <label class="control-label" asp-for="RequestTitle"></label>
+                <textarea rows="6" asp-for="RequestTitle" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-group float-left">
+        <input type="submit" value="ذخیره" class="btn btn-primary" />
+        <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+    </div>
+</form>

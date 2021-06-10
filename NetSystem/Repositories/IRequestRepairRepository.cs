@@ -23,6 +23,12 @@ namespace NetSystem.Repositories
         /// <param name="ld">شناسه</param>
         /// <returns></returns>
         Task<RequestReapirDetailsViewModel> GetRequestRepairById(long ld);
+        /// <summary>
+        /// ویرایش درخواست تعمیر
+        /// </summary>
+        /// <param name="model">مدل</param>
+        /// <returns></returns>
+        Task<bool> UpdateRequestRepair(RequestReapirDetailsViewModel model);
     }
 
     public class RequestRepairRepository : IRequestRepairRepository
@@ -31,7 +37,7 @@ namespace NetSystem.Repositories
 
         public UserManager<ApplicationUser> _userManager { get; }
 
-        public RequestRepairRepository(AppDbContext context,UserManager<ApplicationUser> userManager)
+        public RequestRepairRepository(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -39,21 +45,20 @@ namespace NetSystem.Repositories
         public async Task<IEnumerable<RequestRepairListViewModel>> GetActiveRequestRepair()
         {
             var reqList = await _context.RequestRepairs.Where(x => x.IsActive == true && x.IsDelete == false)
-                .Include(x => x.Machinery).Include(x => x.TypeofRepair).ToListAsync();
-            if(reqList.Count > 0)
+                .Include(x => x.Machinery).Include(x => x.Machinery.Coding).Include(x => x.TypeofRepair).ToListAsync();
+            if (reqList.Count > 0)
             {
                 var result = new List<RequestRepairListViewModel>();
                 foreach (var model in reqList)
                 {
-                    result.Add(new RequestRepairListViewModel
-                    {
-                        ID = model.ID,
-                        RequestDataTime = model.RequestDataTime.PersianShortDate(),
-                        MachineryCode = model.Machinery.Coding.Code.ToString(),
-                        MachineryTitel = model.Machinery.MachineryTitle,
-                        TypeofRepairID_FK = model.TypeofRepair.TypeTitle,
-                        RequestTitle = model.RequestTitle
-                    });
+                    var item = new RequestRepairListViewModel();
+                    item.RequestDataTime = model.RequestDataTime.PersianShortDate();
+                    item.MachineryCode = model.Machinery.Coding.Code.ToString();
+                    item.MachineryTitel = model.Machinery.MachineryTitle;
+                    item.TypeofRepairID_FK = model.TypeofRepair.TypeTitle;
+                    item.RequestTitle = model.RequestTitle;
+                    item.ID = model.ID;
+                    result.Add(item);
                 }
 
                 return result;
@@ -69,28 +74,48 @@ namespace NetSystem.Repositories
 
         public async Task<RequestReapirDetailsViewModel> GetRequestRepairById(long ld)
         {
-            var req = await   _context.RequestRepairs.Where(x => x.ID == ld).Include(u=>u.ApplicationUser).Include(w=>w.Machinery).Include(x => x.ApplicationUser).Include(x => x.Applicant).Include(x => x.TypeofRepair).ToListAsync();
-            
+            var req = await _context.RequestRepairs.Where(x => x.ID == ld)
+                .Include(u => u.ApplicationUser)
+                .Include(x => x.Machinery.Coding)
+                .Include(w => w.Machinery)
+                .ToListAsync();
+
             if (req.Count == 1)
             {
                 var user = await _userManager.FindByIdAsync(req[0].UserID_FK);
-                var result = new RequestReapirDetailsViewModel()
-                {
-                    ID = req[0].ID,
-                    ApplicantList = req[0].ApplicantID_FK,
-                    ApplicantUser = user.UserName,
-                    MachineryCode = req[0].Machinery.Coding.ToString(),
-                    MachineryTitel = req[0].Machinery.MachineryTitle,
-                    RegisteredDataTime = req[0].Registered.PersianShortDate(),
-                    RequestDataTime = req[0].RequestDataTime.PersianShortDate(),
-                    RequestTitle = req[0].RequestTitle,
-                    TypeofRepairList = req[0].TypeofRepairID_FK,
-
-
-                };
+                var result = new RequestReapirDetailsViewModel();
+                result.ID = req[0].ID;
+                result.ApplicantList = req[0].ApplicantID_FK;
+                result.ApplicantUser = user.UserName;
+                result.MachineryCode = req[0].Machinery.Coding.ToString();
+                result.MachineryTitel = req[0].Machinery.MachineryTitle;
+                result.RegisteredDataTime = req[0].Registered.PersianShortDate();
+                result.RequestDataTime = req[0].RequestDataTime.PersianShortDate();
+                result.RequestTitle = req[0].RequestTitle;
+                result.TypeofRepairList = req[0].TypeofRepairID_FK;
                 return result;
             }
             return null;
+        }
+
+        public async Task<bool> UpdateRequestRepair(RequestReapirDetailsViewModel model)
+        {
+            try
+            {
+                var req = await _context.RequestRepairs.FindAsync(model.ID);
+                req.ApplicantID_FK = model.ApplicantList;
+                req.TypeofRepairID_FK = model.TypeofRepairList;
+                req.RequestTitle = model.RequestTitle.Trim();
+                _context.Update(req);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+
         }
     }
 }
