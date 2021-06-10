@@ -142,23 +142,13 @@ namespace NetSystem.Controllers
         // GET: RequestRepairs/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
+            var result = await _repairRepository.GetRequestRepairById((long)id);
+            if (result == null) return NotFound();
+            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", result.TypeofRepairList);
+            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", result.ApplicantList);
 
-            var requestRepair = await _context.RequestRepairs
-                .Include(r => r.Applicant)
-                .Include(r => r.ApplicationUser)
-                .Include(r => r.Machinery)
-                .Include(r => r.TypeofRepair)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (requestRepair == null)
-            {
-                return NotFound();
-            }
-
-            return View(requestRepair);
+            return View(result);
         }
 
         // POST: RequestRepairs/Delete/5

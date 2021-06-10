@@ -1,75 +1,80 @@
-﻿@model NetSystem.Entity.RequestRepair
+﻿@model NetSystem.ViewModels.RequestRepair.RequestReapirDetailsViewModel
 
 @{
     ViewData["Title"] = "حذف";
 }
 
-<h2 class="text text-danger">حذف</h2>
+<h2 class="text text-danger">حذف درخواست تعمیر</h2>
+<h4>آیا شما می خواهید درخواست تعمیر زیر را حذف کنید؟</h4>
+<hr />
+<form asp-action="Delete" asp-controller="RequestRepairs" method="post">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label asp-for="ID" class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ID" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-<h3>شما مطمئن هستید که می خواهید این گزینه را حذف کنید؟</h3>
-<div>
-    <h4>درخواست تعمیر</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Registered)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Registered)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDelete)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsDelete)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Machinery)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Machinery.MachineryTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestDataTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RequestDataTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TypeofRepair)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TypeofRepair.TypeTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Applicant)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Applicant.ApplicantTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestTitle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RequestTitle)
-        </dd>
-    </dl>
+            <div class="form-group row">
+                <label asp-for="ApplicantUser" class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ApplicantUser" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RegisteredDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RegisteredDataTime" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RequestDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RequestDataTime" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryCode"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryCode" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryTitel"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryTitel" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="TypeofRepairList"></label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="TypeofRepairList" asp-items="ViewBag.TypeofRepairList"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="ApplicantList"></label>
+                <div class="col-sm-8">
+                    <select asp-for="ApplicantList" class="form-control" asp-items="ViewBag.ApplicantList"></select>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group ">
+                <label class="control-label" asp-for="RequestTitle"></label>
+                <textarea rows="6" asp-for="RequestTitle" class="form-control" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="form-group float-left">
         <input type="submit" value="حذف" class="btn btn-danger" />
         <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
-    </form>
-</div>
+    </div>
+</form>
+
