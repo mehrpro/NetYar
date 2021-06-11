@@ -34,7 +34,7 @@ namespace NetSystem.Repositories
         /// </summary>
         /// <param name="id">شناسه</param>
         /// <returns></returns>
-        Task<RequestRepairDeleteViewModel> GetRequestRepairForDeltet(long id);
+        Task<RequestRepairDeleteViewModel> GetRequestRepairForDelete(long id);
     }
 
     public class RequestRepairRepository : IRequestRepairRepository
@@ -124,15 +124,15 @@ namespace NetSystem.Repositories
 
         }
 
-        public async Task<RequestRepairDeleteViewModel> GetRequestRepairForDeltet(long id)
+        public async Task<RequestRepairDeleteViewModel> GetRequestRepairForDelete(long id)
         {
             var req = await _context.RequestRepairs.Where(x => x.ID == id)
-              .Include(u => u.ApplicationUser)
-              .Include(x => x.Machinery.Coding)
-              .Include(w => w.Machinery)
-              .Include(w=>w.TypeofRepair)
-              .Include(e=>e.Applicant)
-              .ToListAsync();
+                .Include(u => u.ApplicationUser)
+                .Include(x => x.Machinery.Coding)
+                .Include(w => w.Machinery)
+                .Include(w => w.TypeofRepair)
+                .Include(e => e.Applicant)
+                .ToListAsync();
 
             if (req.Count == 1)
             {

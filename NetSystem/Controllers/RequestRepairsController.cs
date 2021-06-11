@@ -93,25 +93,6 @@ namespace NetSystem.Controllers
             return View(requestRepair);
         }
 
-        // GET: RequestRepairs/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var requestRepair = await _context.RequestRepairs.FindAsync(id);
-            if (requestRepair == null)
-            {
-                return NotFound();
-            }
-            ViewData["ApplicantID_FK"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", requestRepair.ApplicantID_FK);
-            ViewData["UserID_FK"] = new SelectList(_context.ApplicationUsers, "Id", "Id", requestRepair.UserID_FK);
-            ViewData["MachineryID_FK"] = new SelectList(_context.Machineries, "ID", "MachineryTitle", requestRepair.MachineryID_FK);
-            ViewData["TypeofRepairID_FK"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", requestRepair.TypeofRepairID_FK);
-            return View(requestRepair);
-        }
 
         // POST: RequestRepairs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -143,7 +124,7 @@ namespace NetSystem.Controllers
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null) return NotFound();
-            var result = await _repairRepository.GetRequestRepairForDeltet((long)id);
+            var result = await _repairRepository.GetRequestRepairForDelete((long)id);
             if (result == null) return NotFound();
             return View(result);
         }
@@ -156,15 +137,11 @@ namespace NetSystem.Controllers
             var requestRepair = await _context.RequestRepairs.FindAsync(id);
             requestRepair.IsDelete = true;
             requestRepair.IsActive = false;
-            requestRepair.UserID_FK =  _userManager.GetUserId(HttpContext.User);
+            requestRepair.UserID_FK = _userManager.GetUserId(HttpContext.User);
             _context.RequestRepairs.Update(requestRepair);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RequestRepairExists(long id)
-        {
-            return _context.RequestRepairs.Any(e => e.ID == id);
-        }
     }
 }
