@@ -1,4 +1,4 @@
-﻿@model NetSystem.ViewModels.RequestRepair.RequestReapirDetailsViewModel
+﻿@model NetSystem.ViewModels.RequestRepair.RequestRepairDeleteViewModel
 
 @{
     ViewData["Title"] = "حذف";
@@ -56,13 +56,13 @@
             <div class="form-group row">
                 <label class="col-sm-4 control-label" asp-for="TypeofRepairList"></label>
                 <div class="col-sm-8">
-                    <select class="form-control" asp-for="TypeofRepairList" asp-items="ViewBag.TypeofRepairList"></select>
+                    <input class="form-control" asp-for="TypeofRepairList" readonly="readonly" ></input>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 control-label" asp-for="ApplicantList"></label>
                 <div class="col-sm-8">
-                    <select asp-for="ApplicantList" class="form-control" asp-items="ViewBag.ApplicantList"></select>
+                    <input asp-for="ApplicantList" class="form-control" readonly="readonly"></input>
                 </div>
             </div>
             <hr />
@@ -72,9 +72,12 @@
             </div>
         </div>
     </div>
+
     <div class="form-group float-left">
+        <a class="btn btn-info" asp-action="Details" asp-route-id="@Model.ID">ویرایش</a>    
         <input type="submit" value="حذف" class="btn btn-danger" />
         <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+
     </div>
 </form>
 

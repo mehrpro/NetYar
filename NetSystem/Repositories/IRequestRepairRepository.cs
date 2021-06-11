@@ -29,6 +29,12 @@ namespace NetSystem.Repositories
         /// <param name="model">مدل</param>
         /// <returns></returns>
         Task<bool> UpdateRequestRepair(RequestReapirDetailsViewModel model);
+        /// <summary>
+        /// جزئیات درخواست برای صفحه حذف
+        /// </summary>
+        /// <param name="id">شناسه</param>
+        /// <returns></returns>
+        Task<RequestRepairDeleteViewModel> GetRequestRepairForDeltet(long id);
     }
 
     public class RequestRepairRepository : IRequestRepairRepository
@@ -87,7 +93,7 @@ namespace NetSystem.Repositories
                 result.ID = req[0].ID;
                 result.ApplicantList = req[0].ApplicantID_FK;
                 result.ApplicantUser = user.UserName;
-                result.MachineryCode = req[0].Machinery.Coding.ToString();
+                result.MachineryCode = req[0].Machinery.Coding.Code.ToString();
                 result.MachineryTitel = req[0].Machinery.MachineryTitle;
                 result.RegisteredDataTime = req[0].Registered.PersianShortDate();
                 result.RequestDataTime = req[0].RequestDataTime.PersianShortDate();
@@ -116,6 +122,34 @@ namespace NetSystem.Repositories
             }
 
 
+        }
+
+        public async Task<RequestRepairDeleteViewModel> GetRequestRepairForDeltet(long id)
+        {
+            var req = await _context.RequestRepairs.Where(x => x.ID == id)
+              .Include(u => u.ApplicationUser)
+              .Include(x => x.Machinery.Coding)
+              .Include(w => w.Machinery)
+              .Include(w=>w.TypeofRepair)
+              .Include(e=>e.Applicant)
+              .ToListAsync();
+
+            if (req.Count == 1)
+            {
+                var user = await _userManager.FindByIdAsync(req[0].UserID_FK);
+                var result = new RequestRepairDeleteViewModel();
+                result.ID = req[0].ID;
+                result.ApplicantList = req[0].Applicant.ApplicantTitle;
+                result.ApplicantUser = user.UserName;
+                result.MachineryCode = req[0].Machinery.Coding.Code.ToString();
+                result.MachineryTitel = req[0].Machinery.MachineryTitle;
+                result.RegisteredDataTime = req[0].Registered.PersianShortDate();
+                result.RequestDataTime = req[0].RequestDataTime.PersianShortDate();
+                result.RequestTitle = req[0].RequestTitle;
+                result.TypeofRepairList = req[0].TypeofRepair.TypeTitle;
+                return result;
+            }
+            return null;
         }
     }
 }

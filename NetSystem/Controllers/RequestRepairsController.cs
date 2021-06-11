@@ -143,11 +143,8 @@ namespace NetSystem.Controllers
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null) return NotFound();
-            var result = await _repairRepository.GetRequestRepairById((long)id);
+            var result = await _repairRepository.GetRequestRepairForDeltet((long)id);
             if (result == null) return NotFound();
-            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", result.TypeofRepairList);
-            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", result.ApplicantList);
-
             return View(result);
         }
 
@@ -157,7 +154,10 @@ namespace NetSystem.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var requestRepair = await _context.RequestRepairs.FindAsync(id);
-            _context.RequestRepairs.Remove(requestRepair);
+            requestRepair.IsDelete = true;
+            requestRepair.IsActive = false;
+            requestRepair.UserID_FK =  _userManager.GetUserId(HttpContext.User);
+            _context.RequestRepairs.Update(requestRepair);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

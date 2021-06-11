@@ -5,7 +5,7 @@
 }
 
 <h2>درخواست های جاری</h2>
-
+<hr />
 @*<p>
         <a asp-action="Create" class="btn btn-primary">جدید</a>
     </p>*@
@@ -16,7 +16,7 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.ID)</th>
