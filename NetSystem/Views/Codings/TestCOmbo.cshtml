@@ -1,31 +1,55 @@
-﻿<h1>Cascading Dropdown List of Country, State and City</h1>
-<hr />
-<br />
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+
 <div class="row">
-    <div class="col-lg-3"></div>
-    <form id="myForm">
-        <label for="CountryDropdown"><b>Departments</b></label>
-        <select class="form-control" id="CountryDropdown"
-                name="CountryDropdown"></select>
-    </form>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <form>
+            <div class="form-group">
+                <label class="control-label">Country</label>
+                <select id="ddlcountry" class="form-control" asp-items="ViewBag.CompanyID_FK"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">State</label>
+                <select id="ddlstate" class="form-control" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">City</label>
+                <select id="ddlcity" class="form-control" asp-items="@(new SelectList(string.Empty, "Value", "Text"))"></select>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-4"></div>
 </div>
 
 
-@section Scripts{
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            type: "GET",
-            url: "/Codings/GetCountry",
-            data: "{}",
-            success: function (data) {
-                var s = '<option value="-1">Please Select a Country</option>';
-                for (var i = 0; i < data.length; i++) {
-                    s += '<option value="' + data[i].ID + '">' + data[i].CompanyTiltle + '</option>';
-                }
-                $("#CountryDropdown").html(s);
-            }
-        });
-    });
-</script>
- }
+@section Scripts
+{
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+    <script>
+        $(function () {
+            $("#ddlcountry").change(function () {
+                $.getJSON("/Codings/GetGroup", { gid: $("#ddlcountry").val() }, function (d) {
+                    var row = "";
+                    $("#ddlstate").empty();
+                    $.each(d, function (i, v) {
+                        row += "<option value=" + v.value + ">" + v.text + "</option>";
+                    });
+                    $("#ddlstate").html(row);
+                })
+            })
+            $("#ddlstate").change(function () {
+                $.getJSON("/Codings/GetSubGroup", { sid: $("#ddlstate").val() }, function (d) {
+                    var row = "";
+                    $("#ddlcity").empty();
+                    $.each(d, function (i, v) {
+                        row += "<option value=" + v.value + ">" + v.text + "</option>";
+                    });
+                    $("#ddlcity").html(row);
+                })
+            })
+        })
+    </script>
+}

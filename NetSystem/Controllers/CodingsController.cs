@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,7 +19,7 @@ namespace NetSystem.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICascadingLogic _cascadingLogic;
 
-        public CodingsController(AppDbContext context, UserManager<ApplicationUser> userManager,ICascadingLogic cascadingLogic)
+        public CodingsController(AppDbContext context, UserManager<ApplicationUser> userManager, ICascadingLogic cascadingLogic)
         {
             _context = context;
             _userManager = userManager;
@@ -62,8 +63,8 @@ namespace NetSystem.Controllers
         public IActionResult Create()
         {
             ViewData["CompanyID_FK"] = new SelectList(_context.Companies, "ID", "CompanyTiltle");
-            ViewData["GroupID_FK"] = new SelectList(_context.Groups, "ID", "GroupTitle");
-            ViewData["SubGroupID_FK"] = new SelectList(_context.SubGroups, "ID", "SubGroupTitle");
+            //ViewData["GroupID_FK"] = new SelectList(_context.Groups, "ID", "GroupTitle");
+            //ViewData["SubGroupID_FK"] = new SelectList(_context.SubGroups, "ID", "SubGroupTitle");
             return View();
         }
 
@@ -89,6 +90,9 @@ namespace NetSystem.Controllers
 
         public IActionResult TestCOmbo()
         {
+            ViewData["CompanyID_FK"] = new SelectList(_context.Companies, "ID", "CompanyTiltle");
+            //ViewData["GroupID_FK"] = new SelectList(_context.Groups, "ID", "GroupTitle");
+            //ViewData["SubGroupID_FK"] = new SelectList(_context.SubGroups, "ID", "SubGroupTitle");
             return View();
         }
 
@@ -193,15 +197,31 @@ namespace NetSystem.Controllers
         }
 
 
+
+
         [HttpGet]
-        public  IActionResult GetCountry()
+        public JsonResult GetGroup(int gid)
         {
-
-            var companyQuery = _context.Companies.ToList();
-
-            return Json(companyQuery);
+            var list = new List<SelectListItem>();
+            var result = _context.Groups.Where(x => x.CompanyID_FK == gid).ToList();
+            foreach (var item in result)
+            {
+                list.Add(new SelectListItem { Text = item.GroupTitle, Value = item.ID.ToString() });
+            }
+            return Json(list);
         }
 
+        [HttpGet]
+        public JsonResult GetSubGroup(int sid)
+        {
+            var list = new List<SelectListItem>();
+            var result = _context.SubGroups.Where(x => x.GroupID_FK == sid).ToList();
+            foreach (var item in result)
+            {
+                list.Add(new SelectListItem { Text = item.SubGroupTitle, Value = item.ID.ToString() });
+            }
+            return Json(list);
+        }
 
 
     }
