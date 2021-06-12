@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using NetSystem.BL;
 
 namespace NetSystem.Controllers
 {
@@ -15,17 +16,23 @@ namespace NetSystem.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICascadingLogic _cascadingLogic;
 
-        public CodingsController(AppDbContext context,UserManager<ApplicationUser> userManager)
+        public CodingsController(AppDbContext context, UserManager<ApplicationUser> userManager,ICascadingLogic cascadingLogic)
         {
             _context = context;
             _userManager = userManager;
+            _cascadingLogic = cascadingLogic;
         }
 
         // GET: Codings
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Codings.Include(c => c.ApplicationUser).Include(c => c.Company).Include(c => c.Group).Include(c => c.SubGroup);
+            var appDbContext = _context.Codings
+                .Include(c => c.ApplicationUser)
+                .Include(c => c.Company)
+                .Include(c => c.Group)
+                .Include(c => c.SubGroup);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -80,6 +87,12 @@ namespace NetSystem.Controllers
             return View(coding);
         }
 
+        public IActionResult TestCOmbo()
+        {
+            return View();
+        }
+
+
         // GET: Codings/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
@@ -105,7 +118,9 @@ namespace NetSystem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ID,CompanyID_FK,GroupID_FK,SubGroupID_FK,UserID_FK,CodeIndex,Code,CodeTitle,Description")] Coding coding)
+        public async Task<IActionResult> Edit(long id,
+            [Bind("ID,CompanyID_FK,GroupID_FK,SubGroupID_FK,UserID_FK,CodeIndex,Code,CodeTitle,Description")]
+             Coding coding)
         {
             if (id != coding.ID)
             {
@@ -176,5 +191,18 @@ namespace NetSystem.Controllers
         {
             return _context.Codings.Any(e => e.ID == id);
         }
+
+
+        [HttpGet]
+        public  IActionResult GetCountry()
+        {
+
+            var companyQuery = _context.Companies.ToList();
+
+            return Json(companyQuery);
+        }
+
+
+
     }
 }

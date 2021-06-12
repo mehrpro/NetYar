@@ -14,6 +14,7 @@ using NetSystem.Entity;
 using NetSystem.Models;
 using NetSystem.Repositories;
 using PersianTranslation.Identity;
+using NetSystem.BL;
 
 namespace NetSystem
 {
@@ -29,6 +30,8 @@ namespace NetSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
             services.AddDbContext<AppDbContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -47,6 +50,8 @@ namespace NetSystem
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders().AddErrorDescriber<PersianIdentityErrorDescriber>();
             services.AddTransient<IRequestRepairRepository, RequestRepairRepository>();
+            services.AddTransient<ICascadingLogic, CascadingLogic>();
+
 
 
 
