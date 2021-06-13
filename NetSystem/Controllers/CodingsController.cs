@@ -204,10 +204,8 @@ namespace NetSystem.Controllers
         {
             var list = new List<SelectListItem>();
             var result = _context.Groups.Where(x => x.CompanyID_FK == gid).ToList();
-            foreach (var item in result)
-            {
-                list.Add(new SelectListItem { Text = item.GroupTitle, Value = item.ID.ToString() });
-            }
+            foreach (var item in result)            
+                list.Add(new SelectListItem { Text = item.GroupTitle, Value = item.ID.ToString() });            
             return Json(list);
         }
 
@@ -216,11 +214,22 @@ namespace NetSystem.Controllers
         {
             var list = new List<SelectListItem>();
             var result = _context.SubGroups.Where(x => x.GroupID_FK == sid).ToList();
-            foreach (var item in result)
-            {
-                list.Add(new SelectListItem { Text = item.SubGroupTitle, Value = item.ID.ToString() });
-            }
+            foreach (var item in result)            
+                list.Add(new SelectListItem { Text = item.SubGroupTitle, Value = item.ID.ToString() });            
             return Json(list);
+        }
+
+        public JsonResult GetLastNumber(int cid,int gid,int sid)
+        {
+            var qry = _context.Codings.Where(a => a.CompanyID_FK == cid && a.GroupID_FK == gid && a.SubGroupID_FK == sid).ToList();
+            if (qry.Count() > 0)
+            {
+                var number = qry.Select(a => a.CodeIndex);
+                short v = number.Max();
+                var max = v + 1;
+
+            }
+
         }
 
 
