@@ -1,221 +1,49 @@
-﻿@model IEnumerable<NetSystem.Entity.WorkOrder>
+﻿@model IEnumerable<NetSystem.ViewModels.RequestRepair.RequestRepairListViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "درخواست های جاری";
 }
+<h2>درخواست های جاری</h2>
+<hr />
+<div>
+    @if (Model == null)
+    {
+        <h2> درخواستی ندارید</h2>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ID)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequestDataTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.MachineryCode)</th>
+                    <th>@Html.DisplayNameFor(model => model.MachineryTitel)</th>
+                    <th>@Html.DisplayNameFor(model => model.TypeofRepairID_FK)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequestTitle)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RequestDataTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MachineryCode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MachineryTitel)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TypeofRepairID_FK)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RequestTitle)</td>
+                        <td>
+                            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID">حذف</a> |
+                            <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID">جزئیات</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
-<h1>Index</h1>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDelete)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestRepair)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Electrical)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mecanical)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Piping)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Creating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RepairOutside)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RepairOutSideReportID_FK)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartWorking)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cause_Exhaustion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cause_OperatorNegligence)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cause_QualityofSpareParts)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cause_RepairmanError)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherError)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherErrorDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReportRepair)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonHours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonHoursTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonHoursDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionPlanning)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionPlanningTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionPlanningDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoSpareParts)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoSparePartsTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoSparePartsDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Other)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CloseRequest)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeClosing)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDelete)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestRepair.RequestTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Electrical)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mecanical)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Piping)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RepairOutside)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RepairOutSideReportID_FK)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartWorking)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cause_Exhaustion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cause_OperatorNegligence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cause_QualityofSpareParts)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cause_RepairmanError)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherError)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherErrorDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportRepair)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonHoursTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonHoursDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductionPlanning)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductionPlanningTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductionPlanningDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoSpareParts)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoSparePartsTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoSparePartsDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Other)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CloseRequest)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeClosing)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+

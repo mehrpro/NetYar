@@ -1,213 +1,83 @@
-﻿@model NetSystem.Entity.WorkOrder
+﻿@model NetSystem.ViewModels.RequestRepair.RequestRepairDeleteViewModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "حذف";
 }
 
-<h1>Delete</h1>
+<h2 class="text text-danger">حذف درخواست تعمیر</h2>
+<h4>آیا شما می خواهید درخواست تعمیر زیر را حذف کنید؟</h4>
+<hr />
+<form asp-action="Delete" asp-controller="WorkOrders" method="post">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label asp-for="ID" class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ID" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>WorkOrder</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IsDelete)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IsDelete)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestRepair)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RequestRepair.RequestTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Electrical)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Electrical)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Mecanical)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Mecanical)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piping)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piping)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Creating)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Creating)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Equip)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Equip)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RepairOutside)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RepairOutside)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RepairOutSideReportID_FK)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RepairOutSideReportID_FK)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartWorking)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartWorking)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cause_Exhaustion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cause_Exhaustion)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cause_OperatorNegligence)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cause_OperatorNegligence)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cause_QualityofSpareParts)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cause_QualityofSpareParts)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cause_RepairmanError)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cause_RepairmanError)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherError)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OtherError)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherErrorDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OtherErrorDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ReportRepair)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ReportRepair)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonHours)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonHours)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonHoursTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonHoursTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PersonHoursDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PersonHoursDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductionPlanning)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductionPlanning)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductionPlanningTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductionPlanningTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductionPlanningDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductionPlanningDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NoSpareParts)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NoSpareParts)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NoSparePartsTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NoSparePartsTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NoSparePartsDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NoSparePartsDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Other)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Other)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OtherTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OtherDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OtherDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CloseRequest)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CloseRequest)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateTimeClosing)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateTimeClosing)
-        </dd>
-    </dl>
+            <div class="form-group row">
+                <label asp-for="ApplicantUser" class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    <input type="text" asp-for="ApplicantUser" class="form-control" readonly="readonly" />
+                </div>
+            </div>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RegisteredDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RegisteredDataTime" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="RequestDataTime"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="RequestDataTime" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryCode"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryCode" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="MachineryTitel"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" readonly="readonly" asp-for="MachineryTitel" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="TypeofRepairList"></label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="TypeofRepairList" readonly="readonly"></input>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 control-label" asp-for="ApplicantList"></label>
+                <div class="col-sm-8">
+                    <input asp-for="ApplicantList" class="form-control" readonly="readonly"></input>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group ">
+                <label class="control-label" asp-for="RequestTitle"></label>
+                <textarea rows="6" asp-for="RequestTitle" class="form-control" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group float-left">
+        <a class="btn btn-info" asp-action="Details" asp-route-id="@Model.ID">ویرایش</a>
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a class="btn btn-secondary" asp-action="Index">بازگشت</a>
+
+    </div>
+</form>
+

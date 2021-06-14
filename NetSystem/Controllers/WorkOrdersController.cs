@@ -2,47 +2,73 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetSystem.Entity;
 using NetSystem.Models;
+using NetSystem.Repositories;
+using NetSystem.ViewModels.RequestRepair;
 
 namespace NetSystem.Controllers
 {
     public class WorkOrdersController : Controller
     {
-        private readonly AppDbContext _context;
 
-        public WorkOrdersController(AppDbContext context)
+        private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRequestRepairRepository _repairRepository;
+
+        public WorkOrdersController(
+            AppDbContext context,
+            UserManager<ApplicationUser> userManager,
+            IRequestRepairRepository repairRepository)
         {
             _context = context;
+            _userManager = userManager;
+            _repairRepository = repairRepository;
         }
 
         // GET: WorkOrders
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.WorkOrders.Include(w => w.RequestRepair);
-            return View(await appDbContext.ToListAsync());
+            return View(await _repairRepository.GetActiveRequestRepair());
         }
 
         // GET: WorkOrders/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
+            if (id == null) return NotFound();
+            var result = await _repairRepository.GetRequestRepairById((long)id);
+            if (result == null) return NotFound();
+            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", result.TypeofRepairList);
+            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", result.ApplicantList);
+
+            return View(result);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(long id, [Bind("ID,TypeofRepairList,ApplicantList,RequestTitle")] RequestReapirDetailsViewModel model)
+        {
+            if (id != model.ID)
             {
                 return NotFound();
             }
 
-            var workOrder = await _context.WorkOrders
-                .Include(w => w.RequestRepair)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (workOrder == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                if (!await _repairRepository.UpdateRequestRepair(model))
+                {
+                    return NotFound();
+                }
+                return RedirectToAction(nameof(Index));
             }
+            ViewData["TypeofRepairList"] = new SelectList(_context.TypeofRepairs, "ID", "TypeTitle", model.TypeofRepairList);
+            ViewData["ApplicantList"] = new SelectList(_context.Applicants, "ID", "ApplicantTitle", model.ApplicantList);
 
-            return View(workOrder);
+            return View(model);
         }
 
         // GET: WorkOrders/Create
@@ -52,9 +78,7 @@ namespace NetSystem.Controllers
             return View();
         }
 
-        // POST: WorkOrders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,IsActive,IsDelete,RequestID_FK,Electrical,Mecanical,Piping,Creating,Equip,RepairOutside,RepairOutSideReportID_FK,StartWorking,Cause_Exhaustion,Cause_OperatorNegligence,Cause_QualityofSpareParts,Cause_RepairmanError,OtherError,OtherErrorDescription,ReportRepair,PersonHours,PersonHoursTime,PersonHoursDescription,ProductionPlanning,ProductionPlanningTime,ProductionPlanningDescription,NoSpareParts,NoSparePartsTime,NoSparePartsDescription,Other,OtherTime,OtherDescription,CloseRequest,DateTimeClosing")] WorkOrder workOrder)
@@ -69,22 +93,7 @@ namespace NetSystem.Controllers
             return View(workOrder);
         }
 
-        // GET: WorkOrders/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var workOrder = await _context.WorkOrders.FindAsync(id);
-            if (workOrder == null)
-            {
-                return NotFound();
-            }
-            ViewData["RequestID_FK"] = new SelectList(_context.RequestRepairs, "ID", "RequestTitle", workOrder.RequestID_FK);
-            return View(workOrder);
-        }
 
         // POST: WorkOrders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -107,14 +116,7 @@ namespace NetSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WorkOrderExists(workOrder.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -122,39 +124,27 @@ namespace NetSystem.Controllers
             return View(workOrder);
         }
 
-        // GET: WorkOrders/Delete/5
+        // GET: RequestRepairs/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var workOrder = await _context.WorkOrders
-                .Include(w => w.RequestRepair)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (workOrder == null)
-            {
-                return NotFound();
-            }
-
-            return View(workOrder);
+            if (id == null) return NotFound();
+            var result = await _repairRepository.GetRequestRepairForDelete((long)id);
+            if (result == null) return NotFound();
+            return View(result);
         }
 
-        // POST: WorkOrders/Delete/5
+        // POST: RequestRepairs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var workOrder = await _context.WorkOrders.FindAsync(id);
-            _context.WorkOrders.Remove(workOrder);
+            var requestRepair = await _context.RequestRepairs.FindAsync(id);
+            requestRepair.IsDelete = true;
+            requestRepair.IsActive = false;
+            requestRepair.UserID_FK = _userManager.GetUserId(HttpContext.User);
+            _context.RequestRepairs.Update(requestRepair);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool WorkOrderExists(long id)
-        {
-            return _context.WorkOrders.Any(e => e.ID == id);
         }
     }
 }
