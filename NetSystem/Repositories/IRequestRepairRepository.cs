@@ -41,7 +41,7 @@ namespace NetSystem.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<CreateOrderViewModel> CreateWorkOrders(CreateOrderViewModel model);
+        Task<bool> CreateWorkOrders(CreateOrderViewModel model);
     }
 
     public class RequestRepairRepository : IRequestRepairRepository
@@ -159,7 +159,7 @@ namespace NetSystem.Repositories
             return null;
         }
 
-        public async Task<CreateOrderViewModel> CreateWorkOrders(CreateOrderViewModel model)
+        public async Task<bool> CreateWorkOrders(CreateOrderViewModel model)
         {
             var newObj = new WorkOrder()
             {
@@ -205,6 +205,17 @@ namespace NetSystem.Repositories
                 ProductionPlanningDescription = model.ProductionPlanningDescription,
 
             };
+
+            try
+            {
+                await _context.WorkOrders.AddAsync(newObj);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
   
         }
     }
