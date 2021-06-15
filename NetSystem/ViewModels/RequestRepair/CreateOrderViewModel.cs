@@ -10,12 +10,10 @@ namespace NetSystem.ViewModels.RequestRepair
     {
         [Display(Name ="کد درخواست")]
         public long RequestID_FK { get; set; }
-        [Display(Name ="عنوان درخواست")]
-        public string RequestTitel { get; set; }
+
 
         [Display(Name ="برق")]
         public bool Electrical { get; set; }
-
         [Display(Name ="مکانیکی")]
         public bool Mecanical { get; set; }
         [Display(Name ="تاسیسات")]
@@ -24,13 +22,13 @@ namespace NetSystem.ViewModels.RequestRepair
         public bool Creating { get; set; }
         [Display(Name ="تجهیز")]
         public bool Equip { get; set; }
-        [Display(Name ="تعمیرات در خارج شرکت")]
-        public bool RepairOutside { get; set; }
+
 
 
         [Display(Name ="شروع کار")]
         public DateTime StartWorking { get; set; }
-
+        [Display(Name = "پایان کار")]
+        public DateTime DateTimeClosing { get; set; }
 
         [Display(Name ="فرسودگی")]
         public bool Cause_Exhaustion { get; set; }

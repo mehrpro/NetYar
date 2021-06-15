@@ -19,7 +19,7 @@ namespace NetSystem.Entity
         public bool Creating { get; set; }
         public bool Equip { get; set; }
         public bool RepairOutside { get; set; }
-        public int RepairOutSideReportID_FK { get; set; }
+        public int? RepairOutSideReportID_FK { get; set; }
         public DateTime StartWorking { get; set; }
         public bool Cause_Exhaustion { get; set; }
         public bool Cause_OperatorNegligence { get; set; }

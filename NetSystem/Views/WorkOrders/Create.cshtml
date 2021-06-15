@@ -9,18 +9,16 @@
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
             <div class="form-group row">
                 <label asp-for="RequestID_FK" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
                     <input asp-for="RequestID_FK" class="form-control" readonly="readonly" />
                 </div>
             </div>
-            <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    نوع تعمیرات
-                </div>
+
+            <div class="card form-group ">
+                <div class="card-header">نوع تعمیرات </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-sm-2">
@@ -56,29 +54,11 @@
                     </div>
                 </div>
             </div>
-           </div>
-            @*<div class="form-group">
-            <label asp-for="RepairOutSideReportID_FK" class="control-label"></label>
-            <input asp-for="RepairOutSideReportID_FK" class="form-control" />
-            <span asp-validation-for="RepairOutSideReportID_FK" class="text-danger"></span>
-        </div>*@
 
-            <div class="form-group">
-                <label asp-for="StartWorking" class="control-label"></label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text cursor-pointer" id="date1">انتخاب</span>
-                    </div>
-                    <input type="text" id="StartWorking" class="form-control" aria-label="date1" aria-describedby="date1" />
-                    <input type="hidden" id="StartWorkingMiladi" asp-for="StartWorking" aria-label="date1" aria-describedby="date1" />
-                </div>
-                <span asp-validation-for="StartWorking" class="text-danger"></span>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    علت خرابی
-                </div>
+            <div class="card form-group">
+                <div class="card-header">علت خرابی</div>
                 <div class="card-body">
+
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label class="form-check-label">
@@ -92,6 +72,8 @@
                                 <input class="form-check-input" asp-for="Cause_OperatorNegligence" />
                             </label>
                         </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-sm-6">
                             <label class="form-check-label">
                                 @Html.DisplayNameFor(model => model.Cause_QualityofSpareParts) &nbsp;
@@ -104,117 +86,141 @@
                                 <input class="form-check-input" asp-for="Cause_RepairmanError" />
                             </label>
                         </div>
-                        <div class="col-sm-12">
-                            <label class="form-check-label">
-                                @Html.DisplayNameFor(model => model.OtherError) &nbsp;
-                                <input class="form-check-input" asp-for="OtherError" />
-                            </label>
-                        </div>
-                        <div class="col-sm-12">
-                            <label asp-for="OtherErrorDescription" class="control-label"></label>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">سایر</span>
+                            </div>
                             <input asp-for="OtherErrorDescription" class="form-control" />
-                            <span asp-validation-for="OtherErrorDescription" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-            <div class="col-sm-6">
-
-                <div class="form-group">
-                    <label asp-for="ReportRepair" class="control-label"></label>
-                    <input asp-for="ReportRepair" class="form-control" />
-                    <span asp-validation-for="ReportRepair" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="PersonHours" /> @Html.DisplayNameFor(model => model.PersonHours)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PersonHoursTime" class="control-label"></label>
-                    <input asp-for="PersonHoursTime" class="form-control" />
-                    <span asp-validation-for="PersonHoursTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PersonHoursDescription" class="control-label"></label>
-                    <input asp-for="PersonHoursDescription" class="form-control" />
-                    <span asp-validation-for="PersonHoursDescription" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="ProductionPlanning" /> @Html.DisplayNameFor(model => model.ProductionPlanning)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductionPlanningTime" class="control-label"></label>
-                    <input asp-for="ProductionPlanningTime" class="form-control" />
-                    <span asp-validation-for="ProductionPlanningTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductionPlanningDescription" class="control-label"></label>
-                    <input asp-for="ProductionPlanningDescription" class="form-control" />
-                    <span asp-validation-for="ProductionPlanningDescription" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="NoSpareParts" /> @Html.DisplayNameFor(model => model.NoSpareParts)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="NoSparePartsTime" class="control-label"></label>
-                    <input asp-for="NoSparePartsTime" class="form-control" />
-                    <span asp-validation-for="NoSparePartsTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="NoSparePartsDescription" class="control-label"></label>
-                    <input asp-for="NoSparePartsDescription" class="form-control" />
-                    <span asp-validation-for="NoSparePartsDescription" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Other" /> @Html.DisplayNameFor(model => model.Other)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OtherTime" class="control-label"></label>
-                    <input asp-for="OtherTime" class="form-control" />
-                    <span asp-validation-for="OtherTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OtherDescription" class="control-label"></label>
-                    <input asp-for="OtherDescription" class="form-control" />
-                    <span asp-validation-for="OtherDescription" class="text-danger"></span>
-                </div>
-                @*<div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="CloseRequest" /> @Html.DisplayNameFor(model => model.CloseRequest)
-            </label>
-        </div>
-        <div class="form-group">
-            <label asp-for="DateTimeClosing" class="control-label"></label>
-            <input asp-for="DateTimeClosing" class="form-control" />
-            <span asp-validation-for="DateTimeClosing" class="text-danger"></span>
-        </div>*@
-            </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="RepairOutside" /> @Html.DisplayNameFor(model => model.RepairOutside)
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer">شرح تعمیر</span>
+                    </div>
+                    <textarea rows="8" asp-for="RequestTitel" class="form-control"></textarea>
                 </div>
             </div>
+
+
         </div>
-     
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer" id="date1">شروع کار</span>
+                    </div>
+                    <input type="text" id="StartWorking" class="form-control" aria-label="date1" aria-describedby="date1" />
+                    <input type="hidden" id="StartWorkingMiladi" asp-for="StartWorking" aria-label="date1" aria-describedby="date1" />
+                </div>
+                <span asp-validation-for="StartWorking" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text cursor-pointer" id="date2">پایان کار</span>
+                    </div>
+                    <input type="text" id="DateTimeClosing" class="form-control" aria-label="date2" aria-describedby="date2" />
+                    <input type="hidden" id="DateTimeClosingMiladi" asp-for="DateTimeClosing" aria-label="date2" aria-describedby="date2" />
+                </div>
+                <span asp-validation-for="DateTimeClosing" class="text-danger"></span>
+            </div>
+
+
+            <div class="card form-group">
+                <div class="card-header">علت تاخیر انجام کار</div>
+                <div class="card-body">
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">کمبود نیرو به مدت</span>
+                            </div>
+                            <input type="number" asp-for="PersonHoursTime" class="form-control" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">دقیقه</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">شرح</span>
+                            </div>
+                            <input asp-for="PersonHoursDescription" class="form-control" />
+
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">برنامه ریزی تولید</span>
+                            </div>
+                            <input type="number" asp-for="ProductionPlanningTime" class="form-control" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">دقیقه</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">شرح</span>
+                            </div>
+                            <input asp-for="ProductionPlanningDescription" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">نبود قطعات یدکی</span>
+                            </div>
+                            <input type="number" asp-for="NoSparePartsTime" class="form-control" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">دقیقه</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">شرح</span>
+                            </div>
+                            <input asp-for="NoSparePartsDescription" class="form-control" />
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">سایر</span>
+                            </div>
+                            <input type="number" asp-for="OtherTime" class="form-control" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">دقیقه</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer">شرح</span>
+                            </div>
+                            <input asp-for="OtherDescription" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group float-left">
+                <input type="submit" value="ثبت گزارش" class="btn btn-primary" />
+                <button type="button" class="btn btn-success">تعمیرات در خارج شرکت</button>
+                <a class="btn btn-secondary" asp-action="Index">بازگشت به فهرست</a>
+
+            </div>
+        </div>
+    </div>
 </form>
 
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts
 {
@@ -222,6 +228,13 @@
         $('#date1').MdPersianDateTimePicker({
             targetTextSelector: '#StartWorking',
             targetDateSelector: '#StartWorkingMiladi',
+            dateFormat: 'yyyy-MM-dd hh:mm:ss',
+            disableAfterToday: true,
+            enableTimePicker: true,
+        });
+        $('#date2').MdPersianDateTimePicker({
+            targetTextSelector: '#DateTimeClosing',
+            targetDateSelector: '#DateTimeClosingMiladi',
             dateFormat: 'yyyy-MM-dd hh:mm:ss',
             disableAfterToday: true,
             enableTimePicker: true,

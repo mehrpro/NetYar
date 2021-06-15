@@ -35,6 +35,13 @@ namespace NetSystem.Repositories
         /// <param name="id">شناسه</param>
         /// <returns></returns>
         Task<RequestRepairDeleteViewModel> GetRequestRepairForDelete(long id);
+
+        /// <summary>
+        /// ثبت گزارش تعمیر
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<CreateOrderViewModel> CreateWorkOrders(CreateOrderViewModel model);
     }
 
     public class RequestRepairRepository : IRequestRepairRepository
@@ -150,6 +157,55 @@ namespace NetSystem.Repositories
                 return result;
             }
             return null;
+        }
+
+        public async Task<CreateOrderViewModel> CreateWorkOrders(CreateOrderViewModel model)
+        {
+            var newObj = new WorkOrder()
+            {
+                IsDelete = false,
+                IsActive = true,
+                RequestID_FK = model.RequestID_FK,
+                StartWorking = model.StartWorking,
+                DateTimeClosing = model.DateTimeClosing,
+                CloseRequest = false,
+                ReportRepair = model.ReportRepair,
+                Electrical = Convert.ToBoolean(model.Electrical),
+                Mecanical = Convert.ToBoolean(model.Mecanical),
+                Equip = Convert.ToBoolean(model.Equip),
+                Piping = Convert.ToBoolean(model.Piping),
+                Creating = Convert.ToBoolean(model.Creating),
+
+                Cause_Exhaustion = Convert.ToBoolean(model.Cause_Exhaustion),
+                Cause_OperatorNegligence = Convert.ToBoolean(model.Cause_OperatorNegligence),
+                Cause_QualityofSpareParts = Convert.ToBoolean(model.Cause_QualityofSpareParts),
+                Cause_RepairmanError = Convert.ToBoolean(model.Cause_RepairmanError),
+
+                OtherError = Convert.ToBoolean(model.OtherError),
+                OtherErrorDescription = model.OtherErrorDescription,
+
+                RepairOutside = false,
+                RepairOutSideReportID_FK = null,
+                
+
+                NoSpareParts =Convert.ToBoolean(model.NoSpareParts),
+                NoSparePartsTime = model.NoSparePartsTime,
+                NoSparePartsDescription = model.NoSparePartsDescription,
+
+                Other = Convert.ToBoolean(model.Other),
+                OtherTime = model.OtherTime,
+                OtherDescription = model.OtherDescription,
+
+                PersonHours = Convert.ToBoolean(model.PersonHours),
+                PersonHoursTime = model.PersonHoursTime,
+                PersonHoursDescription = model.PersonHoursDescription,
+
+                ProductionPlanning = Convert.ToBoolean(model.ProductionPlanning),
+                ProductionPlanningTime = model.ProductionPlanningTime,
+                ProductionPlanningDescription = model.ProductionPlanningDescription,
+
+            };
+  
         }
     }
 }
