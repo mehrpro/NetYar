@@ -72,9 +72,10 @@ namespace NetSystem.Controllers
         }
 
         // GET: WorkOrders/Create
-        public IActionResult Create()
+        public IActionResult Create(long RequestID)
         {
-            ViewData["RequestID_FK"] = new SelectList(_context.RequestRepairs, "ID", "RequestTitle");
+            ViewData["RequestID"] = RequestID;
+            
             return View();
         }
 

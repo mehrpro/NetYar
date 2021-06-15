@@ -35,8 +35,8 @@
                         <td>@Html.DisplayFor(modelItem => item.TypeofRepairID_FK)</td>
                         <td>@Html.DisplayFor(modelItem => item.RequestTitle)</td>
                         <td>
-                            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID">حذف</a> |
-                            <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID">جزئیات</a>
+                            <a asp-action="Create" asp-controller="WorkOrders" class="btn btn-success" asp-route-id="@item.ID">ثبت گزارش</a> 
+                            @*<a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID">جزئیات</a>*@
                         </td>
                     </tr>
                 }

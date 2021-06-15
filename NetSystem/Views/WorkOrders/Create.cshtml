@@ -6,14 +6,14 @@
 
 <h2>گزارش تعمیر</h2>
 <hr />
-<form asp-action="Create">
+<form asp-controller="WorkOrders" asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group row">
                 <label asp-for="RequestID_FK" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9">
-                    <input asp-for="RequestID_FK" class="form-control" readonly="readonly" />
+                    <input asp-for="RequestID_FK" value="@ViewBag.RequestID" class="form-control" readonly="readonly" />
                 </div>
             </div>
 
